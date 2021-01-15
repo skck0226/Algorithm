@@ -8,7 +8,7 @@ vector<int> v[101];
 int visited[101];
 vector<int> picked;
 vector<int> p;
-int dfs(int node){
+int dfs(int node, int start){
 //	cout << node << endl;
 	if(visited[node]==1) return node;
 	p.push_back(node);
