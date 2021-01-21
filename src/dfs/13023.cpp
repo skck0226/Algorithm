@@ -7,7 +7,6 @@ vector<int> v[2001];
 int visited[2001];
 int flag = 0;
 void dfs(int node, int level){
-	if(visited[node]==1) return ;
 	if(level==5){
 		flag = 1;
 		return ;
@@ -17,8 +16,8 @@ void dfs(int node, int level){
 		int next = v[node][i];
 		if(visited[next]==1) continue;
 		dfs(next,level+1);
+		if(flag==1) return ;
 	}
-	if(flag==1) return ;
 }
 int main() {
 	scanf("%d %d",&n,&m);

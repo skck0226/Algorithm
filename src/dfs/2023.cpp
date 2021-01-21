@@ -8,9 +8,23 @@ bool isPrime(int num){
     }
     return true;
 }
-void dfs()
+void dfs(int remain, int num){
+	if(!isPrime(num)) return ;
+	if(remain==0){
+		cout<<num<<endl;
+	}
+	for(int i=1;i<=9;i+=2){
+		int x = num;
+		x *= 10;
+		x += i;
+		dfs(remain-1,x);
+	}
+}
 int main() {
 	scanf("%d",&n);
-	dfs()
+	dfs(n-1,2);
+	dfs(n-1,3);
+	dfs(n-1,5);
+	dfs(n-1,7);
 	return 0;
 }
