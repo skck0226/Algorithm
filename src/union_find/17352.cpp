@@ -10,8 +10,6 @@ int find(int n){
 	return parent[n] = find(parent[n]);
 }
 void uni(int a, int b){
-	a = find(a);
-	b = find(b);
 	if(a==b) return;
 	if(a<b) parent[b] = a;
 	else parent[a] = b;
@@ -24,12 +22,15 @@ int main() {
 	int cnt = 0;
 	for(int i=0;i<n-2;i++){
 		int a,b; scanf("%d %d",&a,&b);
+		a = find(a);
+		b = find(b);
 		visit[a] = 1;
 		visit[b] = 1;
-		uni(a,b);
-		s.insert(find(b));
+		uni(a,b);	
 	}
-	cout << " s size " << s.size() << endl;
+	for(int i=1;i<=n;i++){
+		s.insert(find(i));
+	}
 	if(s.size()==0){
 		cout << "1 2";
 		return 0;
