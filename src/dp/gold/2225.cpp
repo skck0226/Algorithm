@@ -14,14 +14,9 @@ int main(){
 	for(int i=2;i<=k;i++){
 		for(int j=2;j<=n;j++){
 			dp[i][j] = dp[i-1][j]%INF + dp[i][j-1]%INF;
+			dp[i][j] %= INF;
 		}
 	}
-	// cout << dp[k][n];
-	for(int i=1;i<=k;i++){
-		for(int j=1;j<=n;j++){
-			printf("%5d",dp[i][j]);
-		}
-		cout << endl;
-	}
+	cout << dp[k][n];
 	return 0;
 }
