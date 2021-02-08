@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <map>
 using namespace std;
 int parent[250000];
@@ -7,22 +8,28 @@ int find(int n){
 	return parent[n] = find(parent[n]);
 }
 void uni(int a, int b){
-	parent[b] = a;
+	a = find(a);
+	b = find(b);
+	if(a==b) return;
+	if(a<b) parent[b] = a;
+	else parent[a] = b;
 }
 int main() {
-	int t; scanf("%d",&t);
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);	cout.tie(NULL);	
+	int t; cin >> t;
 	for(int z=0;z<t;z++){
 		int arr[250000];
 		map<string,int> m;
-		int f; scanf("%d",&f);
+		int f; cin >> f;
 		int n = 1;
 		for(int j=0;j<250000;j++){
 			parent[j] = j;
 			arr[j] = 1;
 		}
 		for(int i=0;i<f;i++){
-			char a[21], b[21];
-			scanf("%s %s",a,b);
+			string a,b;
+			cin >> a >> b;
 			if(m.find(a)==m.end()){
 				m.insert(pair<string,int>(a,n)); n++;
 			}
@@ -31,11 +38,10 @@ int main() {
 			}
 			int x = find(m[a]);
 			int y = find(m[b]);
-			if(x==y) continue;
-			if(x>y) swap(x,y);
-			arr[x] += arr[y];
 			uni(x,y);
-			printf("%d\n",arr[x]);
+			arr[x] += arr[y];
+			
+			cout << arr[x] << "\n";
 		}
 	}
 	return 0;

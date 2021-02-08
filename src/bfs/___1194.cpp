@@ -9,11 +9,13 @@ char arr[51][51];
 int visited[7][51][51];
 queue<int> qy,qx,qcnt,qkey;
 queue<string> qpass;
+int keyUpadate=0;
+int keyVisit[6]={0,};
 bool check(int vy, int vx, int key){
 	if(vy<0||vx<0||vy>=n||vx>=m) return false;
 	if(arr[vy][vx]=='#') return false;
 	if(visited[key][vy][vx]==1) return false;
-	
+	if(key!=keyUpadate) return false;
 	return true;
 }
 int main(){
@@ -38,7 +40,7 @@ int main(){
 		int ccnt = qcnt.front(); qcnt.pop();
 		int ckey = qkey.front(); qkey.pop();
 		string cpass = qpass.front(); qpass.pop();
-		cout << ckey << " " << cy << cx <<endl;
+		cout << ckey << " " << cy << cx <<" "<< cpass <<endl;
 		for(int i=0;i<4;i++){
 			int ny = cy + dy[i];
 			int nx = cx + dx[i];	
@@ -52,16 +54,18 @@ int main(){
 				for(int j=0;j<6;j++){
 					if(arr[ny][nx]=='A'+j){
 						char c = 'a'+j;
-						if(cpass[cpass.find(c)]!=c ){
+						if(cpass[cpass.find(c)]!=c){
 							flag = 1;	
 						}
 					}
 				}
 				if(flag==1) continue;
 				for(int j=0;j<6;j++){
-					if(arr[ny][nx]=='a'+j){
+					if(arr[ny][nx]=='a'+j&&keyVisit[j]!=1){
+						keyVisit[j] = 1;
 						cpass += arr[ny][nx];
 						key = j+1;
+						keyUpadate = key;
 					}
 				}
 				visited[key][ny][nx] = 1;

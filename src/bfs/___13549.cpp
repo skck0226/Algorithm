@@ -1,5 +1,5 @@
 #include <iostream>
-#include <queue>
+#include <deque>
 #include <string.h>
 using namespace std;
 int from,to;
@@ -21,54 +21,30 @@ bool check(int n){
 int main(){
 	int cnt=0;
 	scanf("%d %d",&from,&to);
+	deque<int> q,qcnt;
+	q.push_front(from); qcnt.push_front(cnt);
 	visited[from] = 1;
-	if(from==0){
-		from++;
-		cnt++;
-	}
-	if(to==0){
-		to++;
-		cnt++;
-	}
-	if(to==from){
-		if(cnt==2) cout << "0";
-		else cout << cnt;
-	}
-	// else if(to%2==0&&(to/2)%from==0){
-	// 	cout << cnt;
-	// }
-	else{
-		queue<int> q,qcnt;
-		q.push(from); qcnt.push(cnt);
-		
-		while(!q.empty()){
-			int now = q.front(); q.pop();
-			int ccnt = qcnt.front(); qcnt.pop();
-			if(now==to){
-				cout << ccnt;
-				return 0;	
-			}
-			int x = now;
-			while(x<=to){
-				if(x==to){
-					cout << ccnt;
-					return 0;
-				}
-				int arr[3]={0,};
-				arr[1] = go(x);
-				arr[2] = back(x);	
-				// cout << ccnt+1 << " " << arr[1] 
-				// << " " << arr[2] << endl;
-				for(int i=1;i<3;i++){
-					
-					if(check(arr[i])){
-						q.push(arr[i]); qcnt.push(ccnt+1);
-						visited[arr[i]] = 1;
-					}
-				}
-				x*=2;	
-			}
+	
+	while(!q.empty()){
+		int now = q.front(); q.pop_front();
+		int cnt = qcnt.front(); qcnt.pop_front();
+		if(now==to){
+			cout << cnt;
+			return 0;
+		}
+		if((2*now)<100000&&visited[2*now]==0){
+			q.push_front(2*now); qcnt.push_front(cnt);
+			visited[2*now] = 1;
+		}
+		if(now-1>0&&visited[2*now]==0){
+			q.push_front(now-1); qcnt.push_front(cnt+1);
+			visited[now-1] = 1;
+		}
+		if(now+1<100001&&visited[2*now]==0){
+			q.push_front(now+1); qcnt.push_front(cnt+1);
+			visited[now+1] = 1;
 		}
 	}
+
 	return 0;
 }
