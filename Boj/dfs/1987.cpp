@@ -6,15 +6,11 @@ char arr[21][21];
 int visited[21][21];
 int dy[4] = {0,0,1,-1};
 int dx[4] = {1,-1,0,0};
+int alpha[27]={0,};
 vector<char> picked;
-int dfs(int y, int x){
+int dfs1(int y, int x){
 	visited[y][x] = 1;	
 	picked.push_back(arr[y][x]);
-	// for(int i=0;i<picked.size();i++){
-	// 	cout << picked[i] << endl;
-	// }
-	// cout << picked.size() << endl;
-	// cout << "----------" << endl;
 	int max=1;
 	for(int i=0;i<4;i++){
 		int ny = y + dy[i];
@@ -30,13 +26,32 @@ int dfs(int y, int x){
 		}
 		if(flag==1) continue;
 
-		res = dfs(ny,nx);
+		res = dfs1(ny,nx);
 		if(max<res) max = res;
 
 		picked.pop_back();
 		visited[ny][nx] = 0;
 	}
 	return max > picked.size() ? max : picked.size();
+}
+int dfs2(int y, int x, int level){
+	
+	alpha[arr[y][x]-'A']++;
+	int max=1;
+	for(int i=0;i<4;i++){
+		int ny = y + dy[i];
+		int nx = x + dx[i];
+		if(ny>=n||nx>=m||ny<0||nx<0) continue;
+		if(alpha[arr[ny][nx]-'A']>0){
+			if(max < level) max = level;
+			continue;
+		}
+		int ret = dfs2(ny,nx,level+1);
+		if(max<ret) max = ret;
+
+		alpha[arr[ny][nx]-'A']--;
+	}
+	return max;
 }
 int main() {
 	scanf("%d %d",&n,&m);
@@ -46,7 +61,9 @@ int main() {
 			scanf("%c",&arr[i][j]);
 		}
 	}
-	int res = dfs(0,0);
-	cout << res << endl;
+	int res1 = dfs1(0,0);
+	int res2 = dfs2(0,0,1);
+	cout << res1 << endl;
+	cout << res2 << endl;
 	return 0;
 }
