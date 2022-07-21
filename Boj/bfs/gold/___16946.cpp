@@ -17,12 +17,9 @@ int dp[1001][1001] = {0,};
 map<int,int> block2cnt;
 int block = 1;
 void bfs(int y, int x){
-    if(dp[y][x]!=0) return ;
+    if(visited[y][x]) return;
     queue<int> qy,qx;
     vector<int> vy,vx;
-    for(int i=0;i<n;i++){
-        memset(visited[i], 0, sizeof(visited[i]));
-    }
     qy.push(y); qx.push(x);
     vy.push_back(y); vx.push_back(x);
     visited[y][x] = 1;
@@ -38,7 +35,7 @@ void bfs(int y, int x){
             if(ny>=n||nx>=m||ny<0||nx<0) continue;
             if(visited[ny][nx]==1 || arr[ny][nx]=='1') continue;
             qy.push(ny); qx.push(nx);
-            vy.push_back(y); vx.push_back(x);
+            vy.push_back(ny); vx.push_back(nx);
             visited[ny][nx] = 1;
         }
     }
