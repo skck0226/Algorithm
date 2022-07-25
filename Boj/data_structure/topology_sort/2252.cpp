@@ -46,3 +46,37 @@ int main(){
     }
     return 0;
 }
+// #include <iostream>
+// #include <deque>
+// #include <vector>
+// using namespace std;
+// int indegree[32005] = {0,};
+// int visited[32005] = {0,};
+// vector<int> v[32005];
+// deque<int> q;
+// int main(){
+//     int n,m;
+//     cin >> n >> m;
+//     for(int i=0;i<m;i++){
+//         int a,b;
+//         cin >> a >> b;
+//         indegree[b]++;
+//         v[a].push_back(b);
+//     }
+//     for(int i=1;i<=n;i++){
+//         if(indegree[i]==0) q.push_back(i);
+//     }
+//     while(!q.empty()){
+//         int now = q.front();
+//         q.pop_front();
+//         if(visited[now]) continue;
+//         visited[now] = 1;
+//         for(auto next : v[now]){
+//             if( --indegree[next]==0){
+//                 q.push_back(next);
+//             }
+//         }
+//         cout << now << " ";
+//     }
+//     return 0;
+// }
