@@ -12,7 +12,7 @@ int checkM(){
             if( (ip_vec[0] >> i )!= (ip_vec[j] >> i) ) return bit << i+1;
         }
         bit = bit << 1;
-        bit += 1;    
+        bit |= 1;
     }
 }
 void print(int mask)
@@ -28,7 +28,6 @@ void print(int mask)
 }
 int main(){
     cin >> n;
-    int common_bit = ~0;
     fflush(stdin);
     for(int i=0;i<n;i++){
         string ip;
