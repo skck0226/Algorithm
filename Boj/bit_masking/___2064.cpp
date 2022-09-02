@@ -6,11 +6,25 @@ using namespace std;
 int n;
 vector<int> ip_vec;
 int checkM(){
+    int bit = 0;
     for(int i=31;i>=0;i--){
-        for(int j=0;j<n;j++){
-            if( (ip_vec[0] >> i )!= (ip_vec[j] >> i) ) return i+1;
+        for(int j=1;j<n;j++){
+            if( (ip_vec[0] >> i )!= (ip_vec[j] >> i) ) return bit << i+1;
         }
+        bit = bit << 1;
+        bit += 1;    
     }
+}
+void print(int mask)
+{
+    int shift = 24;
+    for (int i = 0; i < 4; i++, shift -= 8)
+    {
+        cout << ((mask >> shift) & (1 << 8) - 1);
+        if (i != 3)
+            cout << '.';
+    }
+    cout << '\n';
 }
 int main(){
     cin >> n;
@@ -28,24 +42,10 @@ int main(){
             ip_bit |= (num<<(8*index));
             index--;
         }
-        common_bit &= ip_bit;
         ip_vec.push_back(ip_bit);
     }
-    string ip_v4 = "";
-    for(int i=3;i>=0;i--){
-        int temp = (common_bit >> (8 * i)) & 0b00000000000000000000000011111111;
-        ip_v4 += to_string(temp);
-        if(i!=0) ip_v4 += '.';
-    }
-    cout << ip_v4 << endl;
-    int m = checkM();
-    int fill = ~0;
-    int mask = (fill >> m) << m;
-    string mask_str = "";
-    for(int i=3;i>=0;i--){
-        mask_str += to_string(mask >> (8 * i) & 0b00000000000000000000000011111111);
-        if(i>0) mask_str += '.';
-    }
-    cout << mask_str << endl;
+    int mask = checkM();
+    print(ip_vec[0] & mask);
+    print(mask);
     return 0;
 }
